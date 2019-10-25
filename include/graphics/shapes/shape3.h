@@ -1,6 +1,6 @@
 #pragma once
-#include "vector3.h"
-#include "material.h"
+#include "graphics/vector3.h"
+#include "graphics/material.h"
 
 typedef Vector3<float> Vector3f;
 
