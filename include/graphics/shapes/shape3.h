@@ -10,6 +10,7 @@ class Shape3{
 public:
     Shape3();
     Shape3(const Material& material);
+    Shape3& setMaterial(const Material& material);
     virtual bool intersects(const Vector3f& rayOrigin, const Vector3f& rayDirection) const = 0;  // TODO Do I need t0 and t1?
                                                                                              // From line 95 at the link
             // https://www.scratchapixel.com/code.php?id=3&origin=/lessons/3d-basic-rendering/introduction-to-ray-tracing
