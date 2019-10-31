@@ -11,7 +11,9 @@ public:
     Shape3();
     Shape3(const Material& material);
     Shape3& setMaterial(const Material& material);
-    virtual bool intersects(const Vector3f& rayOrigin, const Vector3f& rayDirection) const = 0;  // TODO Do I need t0 and t1?
-                                                                                             // From line 95 at the link
-            // https://www.scratchapixel.com/code.php?id=3&origin=/lessons/3d-basic-rendering/introduction-to-ray-tracing
+    virtual bool findIntersections(const Vector3f& rayOrigin, const Vector3f& rayDirection, Vector3f& intersect1,
+                                   Vector3f& intersect2) const = 0;  
+    bool findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayOirection, Vector3f& intersect);
 };
+
+bool solveQuadratic(const float& a, const float& b, const float& c, float& x1, float& x2);
