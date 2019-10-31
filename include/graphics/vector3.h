@@ -19,6 +19,10 @@ struct Vector3{
     Vector3<T> operator * (const Vector3<T>& rhs) const;
     Vector3<T>& operator *= (const T& scalar);
     Vector3<T>& operator *= (const Vector3<T>& rhs);
+    Vector3<T> operator + (const Vector3<T>& rhs) const;
+    Vector3<T>& operator += (const Vector3<T>& rhs);
+    Vector3<T> operator - (const Vector3<T>& rhs) const;
+    Vector3<T>& operator -= (const Vector3<T>& rhs);
 
     friend std::ostream& operator << (std::ostream& os, const Vector3<T>& rhs){
         os << "[" << rhs.x << " " << rhs.y << " " << rhs.z << "]";
