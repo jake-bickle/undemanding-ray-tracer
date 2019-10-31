@@ -5,10 +5,10 @@ typedef Vector3<float> Vector3f;
 
 struct Material{
     Vector3f color,
-             lightIntensity,
              lightColor;
     float transparency, 
-          reflectivity;
+          reflectivity,
+          lightIntensity;
 
     Material();
     Material(const Material& copy);
