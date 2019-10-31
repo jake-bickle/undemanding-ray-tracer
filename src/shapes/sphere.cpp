@@ -11,7 +11,10 @@ bool Sphere::findIntersections(const Vector3f& rayOrigin, const Vector3f& rayDir
     /*
         Finds the points in front of the ray that intersects the Sphere.
         Returns true if there is at least one intersection.
-        The distance from the origin to intersect1 <= the distance from origin to intersect2
+        The distance from the origin to intersect1 is always <= the distance from the origin to intersect2
+
+        For more information on how this is done, refer to 
+        https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
     */
     float t0, t1 = 0;
     Vector3f L = rayOrigin - this->center;
