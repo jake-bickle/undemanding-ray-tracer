@@ -11,22 +11,13 @@ Shape3& Shape3::setMaterial(const Material& material){
     return *this;
 }
 
-bool Shape3::findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayDirection, Vector3f& intersect){
-    Vector3f intersect2;
-    return findIntersections(rayOrigin, rayDirection, intersect, intersect2);
-}
-
-
 bool solveQuadratic(const float& a, const float& b, const float& c, float& x1, float& x2){
     /*
         Finds the x values where ax^2 + bx + c = 0
-        Returns true if there is at least one solution. x1 and x2 will be the same if only one solution.
-        x1 will always be <= x2 if the functionr returns true
-
-        Uses slightly modified version of quadratic formula to eliminate the "loss of significance" effect. More info at
-        https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
+        Returns true if there is at least one solution. x1 and x2 will be the same if there is only one solution.
+        x1 will always be <= x2 if the function returns true
     */
-    float discriminate = b * b - 4 * a * c;
+    float discriminate = (b * b) - (4 * a * c);
     if (discriminate < 0)
         return false;
     else if (discriminate == 0){
@@ -35,13 +26,10 @@ bool solveQuadratic(const float& a, const float& b, const float& c, float& x1, f
         x2 = x1;
     }
     else{
-        float q = (b > 0) ?
-            -0.5 * b + sqrt(discriminate) :
-            -0.5 * b - sqrt(discriminate);
-        if (a == 0 || q == 0) return false;
-        x1 = q / a;
-        x2 = c / q;
-        if (x2 > x1)
+        if (a == 0) return false;
+        x1 = (-b + sqrt(discriminate)) / 2 * a;
+        x2 = (-b - sqrt(discriminate)) / 2 * a;
+        if (x1 > x2)
             std::swap(x1, x2);
     }
     return true;
