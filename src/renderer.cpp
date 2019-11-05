@@ -26,16 +26,13 @@ Vector3f Renderer::getPrimaryRay(int i, int j) const{
 
 const Shape3* Renderer::findVisibleObject(const Vector3f& primaryRayDirection) const{
     Vector3f origin(0);
-    float closestObjectDistance = INFINITY;
-    const Shape3* closestObject = NULL;
+    Intersection currentIntersection;
+    Intersection nearestIntersection;
     for (auto object : scene){
-        Vector3f intersection;
-        if (object->findNearestIntersection(origin, primaryRayDirection, intersection)){
-            float distance = intersection.magnitude();  // TODO This may be slow. Perhaps the distance could be given by findNearestIntersection instead
-            if (distance < closestObjectDistance)
-                closestObjectDistance = distance;
-                closestObject = object;
+        if (object->findNearestIntersection(origin, primaryRayDirection, currentIntersection)){
+            if (currentIntersection.distance < nearestIntersection.distance)
+                nearestIntersection = currentIntersection;
         }
     }
-    return closestObject;
+    return nearestIntersection.shape;
 }
