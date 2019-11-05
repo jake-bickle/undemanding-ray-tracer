@@ -11,5 +11,7 @@ public:
 
     Sphere();
     Sphere(const Vector3f& center, float radius, const Material& material);
-    bool findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayDirection, Vector3f& intersect) const;
+    bool findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayDirection, Intersection& intersect) const;
+private:
+    static bool solveQuadratic(const float& a, const float& b, const float& c, float& x1, float& x2);
 };
