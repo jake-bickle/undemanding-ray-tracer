@@ -43,7 +43,8 @@ bool Sphere::findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& 
 Sphere& Sphere::operator= (const Sphere& rhs){
     center = rhs.center;
     radius = rhs.radius;
-    return Shape3::operator=(rhs);
+    Shape3::operator=(rhs);
+    return *this;
 }
 
 bool Sphere::solveQuadratic(const float& a, const float& b, const float& c, float& x1, float& x2){
