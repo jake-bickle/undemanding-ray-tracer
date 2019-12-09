@@ -5,6 +5,14 @@
 typedef Vector3<float> Vector3f;
 
 class Renderer{
+/*
+    The Renderer has a scene of Shapes that can be rendered to an image of arbitrary size.
+    Some limitations that I plan to get around are the following:
+    - The "camera" is positioned only at the origin (0,0,0)
+    - The "camera" is only looking in the -Z axis direction (0,0,-1)
+
+    Additionally, I don't think the Renderer should hold the data for a scene. That may be a future refactor.
+*/
     std::vector<const Shape3*> scene;
     int _width,
         _height,
@@ -12,7 +20,7 @@ class Renderer{
 
 public:
     Renderer();
-    Renderer(int width, int height, std::vector<Shape3*>& scene);
+    Renderer(int width, int height);
     Renderer& width(int w);
     Renderer& height(int h);
     Renderer& fov(int fov);
