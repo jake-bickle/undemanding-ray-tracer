@@ -21,6 +21,7 @@ void Renderer::render(const char* image_location) const{
         for (int i = 0; i < _width; ++i){
             Vector3f primaryRayDir = getPrimaryRay(i, j);
             const Shape3* visibleObject = findVisibleObject(primaryRayDir);
+            
         }
     }
 }
@@ -30,18 +31,11 @@ Vector3f Renderer::getPrimaryRay(int rasterX, int rasterY) const{
         Gets the primary ray direction at the origin (0,0,0), where the camera is facing the -Z axis (0,0,-1)
     */
     double ndcX = (rasterX + .5) / this->_width;  // rasterX is actually the top left corner of the pixel. We add .5 to get its center.
-    double ndcY = (rasterY + .5) / this->_height;
-    double screenX = (2 * ndcX - 1) * tan(this->_fov / 2);
-    double screenY = 1 - (2 * ndcY * tan(this->_fov / 2));
-    if (this->_width > this->_height){
-        double aspectRatio = this->_width / this->height;
-        screenX *= aspectRatio;
-    }
-    else{
-        double aspectRatio = this->_width / this->height; 
-        screenY *= aspectRatio;
-    }
-    return Vector3f(screenX, screenY, -1); 
+    double ndcY = (rasterY + .5) / this->_height; // Add .5 for the same reason as started above
+    double aspectRatio = this->_width / (float)this->height;
+    double screenX = (2 * ndcX - 1) * tan(this->_fov / 2) * aspectRatio;
+    double screenY = (1 - 2 * ndcY) * tan(this->_fov / 2);
+    return Vector3f(screenX, screenY, -1).normalize(); 
 }
 
 const Shape3* Renderer::findVisibleObject(const Vector3f& primaryRayDirection) const{
