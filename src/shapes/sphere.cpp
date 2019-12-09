@@ -4,6 +4,10 @@
 Sphere::Sphere()
     : Shape3(), center(0,0,0), radius(1) {}
 
+Sphere::Sphere(const Sphere& copy){
+    *this = copy;
+}
+
 Sphere::Sphere(const Vector3f& center, float radius, const Material& material)
     : Shape3(material), center(center), radius(radius) {}
 

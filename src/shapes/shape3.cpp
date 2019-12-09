@@ -3,6 +3,10 @@
 
 Shape3::Shape3() {}
 
+Shape3::Shape3(const Shape3& copy){
+    *this = copy;
+}
+
 Shape3::Shape3(const Material& material)
     : material(material) {}
 

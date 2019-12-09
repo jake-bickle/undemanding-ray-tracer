@@ -10,6 +10,7 @@ public:
     float radius;
 
     Sphere();
+    Sphere(const Sphere& copy);
     Sphere(const Vector3f& center, float radius, const Material& material);
     bool findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayDirection, Intersection& intersect) const;
     Sphere& operator= (const Sphere& rhs);
