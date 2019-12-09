@@ -12,7 +12,7 @@ class Renderer{
 
 public:
     Renderer();
-    Renderer(int width, int height, std::vector<Shape3*> scene);
+    Renderer(int width, int height, std::vector<Shape3*>& scene);
     Renderer& width(int w);
     Renderer& height(int h);
     Renderer& fov(int fov);
