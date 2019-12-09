@@ -11,6 +11,10 @@ Shape3& Shape3::setMaterial(const Material& material){
     return *this;
 }
 
+Shape3& Shape3::operator= (const Shape3& rhs){
+    this->material = rhs.material;
+    return *this;
+}
 
 Intersection::Intersection()
     : coordinates(), shape(NULL), distance(INFINITY) {};
