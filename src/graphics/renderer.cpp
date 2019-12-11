@@ -46,7 +46,7 @@ Vector3f Renderer::castRay(const Vector3f& origin, const Vector3f& primaryRayDir
     // TODO Make this recursive and point towards light. The code right now is a simple placeholder.
     Intersection nearestIntersection;
     if (findNearestVisibleObject(origin, primaryRayDirection, nearestIntersection)){
-        return nearestIntersection.shape->getMaterial().color;
+        return nearestIntersection.shape->material.color;
     }
     return Vector3f(0,0,0);
 }
