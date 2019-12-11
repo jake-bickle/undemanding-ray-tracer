@@ -25,7 +25,7 @@ public:
     Renderer& height(int h);
     Renderer& fov(int fov);
     void addShapeToScene(const Shape3* shape);
-    void render(const char* image_location) const;
+    void render(const char* imageLocation) const;
     Vector3f castRay(const Vector3f& origin, const Vector3f& primaryRayDirection) const;
     Vector3f getPrimaryRay(int i, int j) const;
     bool findNearestVisibleObject(const Vector3f& origin, const Vector3f& primaryRayDirection,
