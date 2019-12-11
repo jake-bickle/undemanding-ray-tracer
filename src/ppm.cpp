@@ -26,8 +26,8 @@ void PPM::saveToFile(const char* fileLocation) const{
     file.open(path);
     file << "P3" << std::endl
          << "#" << path.filename() << std::endl
-         << _width << _height << std::endl
-         << "255";
+         << _width << ' ' << _height << std::endl
+         << "255" << std::endl;
     for (int i = 0; i < _width * _height; ++i){
         Vector3f currentRGB = _pixels[i];
         file << currentRGB.x << ' ' << currentRGB.y << ' ' << currentRGB.z << ' ';
