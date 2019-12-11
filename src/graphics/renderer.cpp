@@ -1,6 +1,7 @@
 #include <graphics/renderer.h>
 #include <graphics/vector3.h>
 #include <cmath> 
+#include <ppm.h>
 
 typedef Vector3<float> Vector3f;
 
@@ -15,15 +16,17 @@ void Renderer::addShapeToScene(const Shape3* shape){
     scene.push_back(shape);
 }
 
-void Renderer::render(const char* image_location) const{
+void Renderer::render(const char* imageLocation) const{
+    PPM img(_width, _height);
     const Vector3f origin(0,0,0);
     for (int j = 0; j < _height; ++j){
         for (int i = 0; i < _width; ++i){
             Vector3f primaryRayDir = getPrimaryRay(i, j);
             Vector3f color = castRay(origin, primaryRayDir);
-            // TODO Code a picture object and color a pixel with the above color
+            img.colorPixel(i, j, color);
         }
     }
+    img.saveToFile(imageLocation);
 }
 
 Vector3f Renderer::getPrimaryRay(int rasterX, int rasterY) const{
