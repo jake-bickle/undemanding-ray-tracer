@@ -58,7 +58,7 @@ fs::path& PPM::addExt(fs::path& path) const{
 
 fs::path& PPM::makeUniqueName(fs::path& path) const{
     auto stem = path.stem().string();
-    auto ext = path.extension();
+    auto ext = path.extension().string();
     for (int i = 1; fs::exists(path); ++i){
         std::ostringstream newName;
         newName << stem << '(' << i << ')' << ext;
