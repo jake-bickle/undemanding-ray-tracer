@@ -13,7 +13,7 @@ class Renderer{
 
     Additionally, I don't think the Renderer should hold the data for a scene. That may be a future refactor.
 */
-    std::vector<const Shape3*> scene;
+    std::vector<const Shape3*> scene;  // TODO Make Shape3* a std::unique_pointer
     int _width,
         _height,
         _fov;
@@ -26,6 +26,8 @@ public:
     Renderer& fov(int fov);
     void addShapeToScene(const Shape3* shape);
     void render(const char* image_location) const;
+    Vector3f castRay(const Vector3f& origin, const Vector3f& primaryRayDirection) const;
     Vector3f getPrimaryRay(int i, int j) const;
-    const Shape3* findVisibleObject(const Vector3f& primaryRayDirection) const;
+    bool findNearestVisibleObject(const Vector3f& origin, const Vector3f& primaryRayDirection,
+                                        Intersection& intersection) const;
 };
