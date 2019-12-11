@@ -1,5 +1,8 @@
 #pragma once
 #include "graphics/vector3.h"
+#include <filesystem>
+
+namespace fs = std::__fs::filesystem;
 
 typedef Vector3<float> Vector3f;
 
@@ -14,4 +17,8 @@ private:
     int _width;
     int _height;
     Vector3f* _pixels;
+
+    fs::path getSanitizedPath(const char* fileLocation) const;
+    fs::path& makeUniqueName(fs::path& path) const;
+    fs::path& addExt(fs::path& path) const;
 };
