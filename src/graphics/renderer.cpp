@@ -11,17 +11,17 @@ Renderer::Renderer(int width, int height)
     : scene(), _width(width), _height(height), _fov(90) {
 }
 
-
 void Renderer::addShapeToScene(const Shape3* shape){
     scene.push_back(shape);
 }
 
 void Renderer::render(const char* image_location) const{
+    const Vector3f origin(0,0,0);
     for (int j = 0; j < _height; ++j){
         for (int i = 0; i < _width; ++i){
             Vector3f primaryRayDir = getPrimaryRay(i, j);
-            const Shape3* visibleObject = findVisibleObject(primaryRayDir);
-            
+            Vector3f color = castRay(origin, primaryRayDir);
+            // TODO Code a picture object and color a pixel with the above color
         }
     }
 }
@@ -32,14 +32,27 @@ Vector3f Renderer::getPrimaryRay(int rasterX, int rasterY) const{
     */
     double ndcX = (rasterX + .5) / this->_width;  // rasterX is actually the top left corner of the pixel. We add .5 to get its center.
     double ndcY = (rasterY + .5) / this->_height; // Add .5 for the same reason as started above
-    double aspectRatio = this->_width / (float)this->height;
+    double aspectRatio = this->_width / (float)this->_height;
     double screenX = (2 * ndcX - 1) * tan(this->_fov / 2) * aspectRatio;
     double screenY = (1 - 2 * ndcY) * tan(this->_fov / 2);
     return Vector3f(screenX, screenY, -1).normalize(); 
 }
 
-const Shape3* Renderer::findVisibleObject(const Vector3f& primaryRayDirection) const{
-    Vector3f origin(0);
+Vector3f Renderer::castRay(const Vector3f& origin, const Vector3f& primaryRayDirection) const{
+    /*
+        Casts ray in direction from the origin. Returns a Vector3f corresponding to the RGB value of the casted ray.
+    */
+
+    // TODO Make this recursive and point towards light. The code right now is a simple placeholder.
+    Intersection nearestIntersection;
+    if (findNearestVisibleObject(origin, primaryRayDirection, nearestIntersection)){
+        return nearestIntersection.shape->getMaterial().color;
+    }
+    return Vector3f(0,0,0);
+}
+
+bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& primaryRayDirection,
+                                              Intersection& intersection) const{
     Intersection currentIntersection;
     Intersection nearestIntersection;
     for (auto object : scene){
@@ -48,5 +61,8 @@ const Shape3* Renderer::findVisibleObject(const Vector3f& primaryRayDirection) c
                 nearestIntersection = currentIntersection;
         }
     }
-    return nearestIntersection.shape;
+    if (nearestIntersection.shape != NULL){
+        intersection = nearestIntersection;
+    }
+    return nearestIntersection.shape != NULL;
 }
