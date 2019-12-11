@@ -14,6 +14,7 @@ public:
     Shape3(const Shape3& copy);
     Shape3(const Material& material);
     Shape3& setMaterial(const Material& material);
+    const Material& getMaterial() const;
     virtual bool findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayDirection, Intersection& intersect) const = 0;
 
     Shape3& operator= (const Shape3& rhs);
