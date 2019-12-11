@@ -33,7 +33,7 @@ void PPM::saveToFile(const char* fileLocation) const{
         file << currentRGB.x << ' ' << currentRGB.y << ' ' << currentRGB.z << ' ';
         // No line can have more than 70 characters
         // Since each RGB value written may have at most 12 characters, we can only write 5 values per line
-        if (i % 5 == 0){
+        if ((i + 1) % 5 == 0){
             file << std::endl;
         }
     }
