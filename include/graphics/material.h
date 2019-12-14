@@ -8,7 +8,8 @@ struct Material{
              lightColor;
     float transparency, 
           reflectivity,
-          lightIntensity;
+          lightIntensity,
+          refractiveIndex;
 
     Material();
     Material(const Material& copy);
