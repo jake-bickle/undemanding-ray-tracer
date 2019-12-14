@@ -12,7 +12,11 @@ Renderer::Renderer(int width, int height)
     : scene(), _width(width), _height(height), _fov(90) {
 }
 
-void Renderer::addShapeToScene(const Shape3* shape){
+void Renderer::addShapeToScene(std::shared_ptr<Shape3>& shape){
+    scene.push_back(shape);
+}
+
+void Renderer::addShapeToScene(std::shared_ptr<Shape3> shape){
     scene.push_back(shape);
 }
 
@@ -58,7 +62,7 @@ bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& 
                                               Intersection& intersection) const{
     Intersection currentIntersection;
     Intersection nearestIntersection;
-    for (auto object : scene){
+    for (auto& object : scene){
         if (object->findNearestIntersection(origin, primaryRayDirection, currentIntersection)){
             if (currentIntersection.distance < nearestIntersection.distance)
                 nearestIntersection = currentIntersection;
