@@ -25,7 +25,6 @@ public:
     Renderer& width(int w);
     Renderer& height(int h);
     Renderer& fov(int fov);
-    void addShapeToScene(std::shared_ptr<Shape3>& shape);
     void addShapeToScene(std::shared_ptr<Shape3> shape);
     void render(const char* imageLocation) const;
     Vector3f castRay(const Vector3f& origin, const Vector3f& primaryRayDirection) const;
