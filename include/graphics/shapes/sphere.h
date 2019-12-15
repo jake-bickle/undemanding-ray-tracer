@@ -6,7 +6,6 @@ typedef Vector3<float> Vector3f;
 
 class Sphere : public Shape3{
 public:
-    Vector3f center;
     float radius;
 
     Sphere();
