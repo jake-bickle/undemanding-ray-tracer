@@ -6,10 +6,10 @@
 typedef Vector3<float> Vector3f;
 
 Renderer::Renderer()
-    : scene(), _width(0), _height(0), _fov(90) {}
+    : scene(), lightSources(), _width(0), _height(0), _fov(90), _rayDepth(10) {}
 
 Renderer::Renderer(int width, int height)
-    : scene(), _width(width), _height(height), _fov(90) {
+    : scene(), lightSources(), _width(width), _height(height), _fov(90) {
 }
 
 void Renderer::addShapeToScene(pShape3 shape){

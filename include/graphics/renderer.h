@@ -16,9 +16,11 @@ class Renderer{
     Additionally, I don't think the Renderer should hold the data for a scene. That may be a future refactor.
 */
     std::vector<pShape3> scene; 
+    std::vector<pShape3> lightSources;
     int _width,
         _height,
-        _fov;
+        _fov,
+        _rayDepth;
 
 public:
     Renderer();
