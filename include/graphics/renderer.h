@@ -4,6 +4,7 @@
 #include <graphics/shapes/shape3.h>
 
 typedef Vector3<float> Vector3f;
+typedef std::shared_ptr<Shape3> pShape3;
 
 class Renderer{
 /*
@@ -14,7 +15,7 @@ class Renderer{
 
     Additionally, I don't think the Renderer should hold the data for a scene. That may be a future refactor.
 */
-    std::vector<std::shared_ptr<Shape3>> scene;  // TODO Make Shape3* a std::unique_pointer
+    std::vector<pShape3> scene; 
     int _width,
         _height,
         _fov;
@@ -25,7 +26,7 @@ public:
     Renderer& width(int w);
     Renderer& height(int h);
     Renderer& fov(int fov);
-    void addShapeToScene(std::shared_ptr<Shape3> shape);
+    void addShapeToScene(pShape3 shape);
     void render(const char* imageLocation) const;
     Vector3f castRay(const Vector3f& origin, const Vector3f& primaryRayDirection) const;
     Vector3f getPrimaryRay(int i, int j) const;

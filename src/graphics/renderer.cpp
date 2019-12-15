@@ -12,7 +12,7 @@ Renderer::Renderer(int width, int height)
     : scene(), _width(width), _height(height), _fov(90) {
 }
 
-void Renderer::addShapeToScene(std::shared_ptr<Shape3> shape){
+void Renderer::addShapeToScene(pShape3 shape){
     scene.push_back(shape);
 }
 
