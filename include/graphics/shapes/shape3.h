@@ -23,6 +23,7 @@ public:
 struct Intersection{
     Intersection();
     Vector3f coordinates;
+    Vector3f normal;
     const Shape3* shape;
     float distance;
 };

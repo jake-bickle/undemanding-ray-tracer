@@ -38,6 +38,7 @@ bool Sphere::findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& 
     }
 
     intersect.coordinates = rayOrigin + rayDirection * t0;
+    intersect.normal = (intersect.coordinates - this->origin).normalize();
     intersect.shape = this;
     intersect.distance = t0;
     return true;
