@@ -47,13 +47,16 @@ Vector3f Renderer::castRay(const Vector3f& origin, const Vector3f& primaryRayDir
     /*
         Casts ray in direction from the origin. Returns a Vector3f corresponding to the RGB value of the casted ray.
     */
-
-    // TODO Make this recursive and point towards light. The code right now is a simple placeholder.
-    Intersection nearestIntersection;
-    if (findNearestVisibleObject(origin, primaryRayDirection, nearestIntersection)){
-        return nearestIntersection.shape->material.color;
+    Vector3f color(0,0,0);
+    Intersection i;
+    if (findNearestVisibleObject(origin, primaryRayDirection, i)){
+        float lightIntensity = calculateLightIntensityAtPoint(i.coordinates);
+        if (lightIntensity == 0)
+            return color;  // Returns black if there is no light
+        color = i.shape->material.color;
+        color *= lightIntensity;
     }
-    return Vector3f(0,0,0);
+    return color.floor();
 }
 
 bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& primaryRayDirection,
@@ -70,6 +73,17 @@ bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& 
         intersection = nearestIntersection;
     }
     return nearestIntersection.shape != NULL;
+}
+
+float Renderer::calculateLightIntensityAtPoint(const Vector3f& point) const{
+    float intensity = 0;
+    for (auto& lightSrc : lightSources){
+        Vector3f direction = lightSrc->origin - point;
+        if (hasDirectLineOfSight(point, direction, lightSrc)){
+            intensity += lightSrc->material.lightIntensity;  // Can we add lightColor at all?
+        }
+    }
+    return intensity;
 }
 
 bool Renderer::hasDirectLineOfSight(const Vector3f& origin, const Vector3f& rayDirection, pShape3 shape) const{
