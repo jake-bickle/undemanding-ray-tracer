@@ -2,14 +2,14 @@
 #include <cmath> 
 
 Sphere::Sphere()
-    : Shape3(), center(0,0,0), radius(1) {}
+    : Shape3(), radius(1) {}
 
 Sphere::Sphere(const Sphere& copy){
     *this = copy;
 }
 
 Sphere::Sphere(const Vector3f& center, float radius, const Material& material)
-    : Shape3(material), center(center), radius(radius) {}
+    : Shape3(center, material), radius(radius) {}
 
 bool Sphere::findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayDirection, Intersection& intersect) const{
     /*
@@ -22,7 +22,7 @@ bool Sphere::findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& 
         https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
     */
     float t0, t1 = 0;
-    Vector3f L = rayOrigin - this->center;
+    Vector3f L = rayOrigin - this->origin;
     float a = 1;
     float b = 2 * rayDirection.dot(L); 
     float c = L.dot(L) - (this->radius * this->radius);
@@ -45,7 +45,6 @@ bool Sphere::findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& 
 
 
 Sphere& Sphere::operator= (const Sphere& rhs){
-    center = rhs.center;
     radius = rhs.radius;
     Shape3::operator=(rhs);
     return *this;

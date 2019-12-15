@@ -8,11 +8,12 @@ struct Intersection;
 
 class Shape3{
 public:
+    Vector3f origin;
     Material material;
 
     Shape3();
     Shape3(const Shape3& copy);
-    Shape3(const Material& material);
+    Shape3(const Vector3f& origin, const Material& material);
     virtual ~Shape3(){};
     virtual bool findNearestIntersection(const Vector3f& rayOrigin, const Vector3f& rayDirection, Intersection& intersect) const = 0;
 
