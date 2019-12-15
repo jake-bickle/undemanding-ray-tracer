@@ -34,4 +34,5 @@ public:
     Vector3f getPrimaryRay(int i, int j) const;
     bool findNearestVisibleObject(const Vector3f& origin, const Vector3f& primaryRayDirection,
                                         Intersection& intersection) const;
+    bool hasDirectLineOfSight(const Vector3f& origin, const Vector3f& rayDirection, pShape3 shape) const;
 };

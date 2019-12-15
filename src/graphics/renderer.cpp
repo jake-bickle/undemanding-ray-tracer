@@ -14,6 +14,8 @@ Renderer::Renderer(int width, int height)
 
 void Renderer::addShapeToScene(pShape3 shape){
     scene.push_back(shape);
+    if (shape->material.lightIntensity > 0)
+        lightSources.push_back(shape);
 }
 
 void Renderer::render(const char* imageLocation) const{
@@ -68,4 +70,12 @@ bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& 
         intersection = nearestIntersection;
     }
     return nearestIntersection.shape != NULL;
+}
+
+bool Renderer::hasDirectLineOfSight(const Vector3f& origin, const Vector3f& rayDirection, pShape3 shape) const{
+    Intersection i;
+    if (findNearestVisibleObject(origin, rayDirection, i)){
+        return i.shape == shape.get();  // Intersection.shape is a raw pointer, so .get() is required
+    }
+    return false;
 }
