@@ -1,7 +1,8 @@
 #include <graphics/renderer.h>
 #include <graphics/vector3.h>
-#include <cmath> 
 #include <ppm.h>
+#include <cmath> 
+#include <algorithm>
 
 typedef Vector3<float> Vector3f;
 
@@ -50,11 +51,8 @@ Vector3f Renderer::castRay(const Vector3f& origin, const Vector3f& primaryRayDir
     Vector3f color(0,0,0);
     Intersection i;
     if (findNearestVisibleObject(origin, primaryRayDirection, i)){
-        float lightIntensity = calculateLightIntensityAtPoint(i.coordinates);
-        if (lightIntensity == 0)
-            return color;  // Returns black if there is no light
         color = i.shape->material.color;
-        color *= lightIntensity;
+        applyLightColoring(i, color);
     }
     return color.floor();
 }
@@ -75,16 +73,21 @@ bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& 
     return nearestIntersection.shape != NULL;
 }
 
-float Renderer::calculateLightIntensityAtPoint(const Vector3f& point) const{
-    float intensity = 0;
-    for (auto& lightSrc : lightSources){
-        Vector3f direction = lightSrc->origin - point;
-        direction.normalize();
-        if (hasDirectLineOfSight(point, direction, lightSrc)){
-            intensity += lightSrc->material.lightIntensity; 
+Vector3f& Renderer::applyLightColoring(const Intersection& intersection, Vector3f& color) const{
+    float emmission = 0;
+    if (!lightSources.empty()){
+        for (auto& lightSrc : lightSources){
+            Vector3f direction = lightSrc->origin - intersection.coordinates;
+            direction.normalize();
+            Vector3f newOrigin = intersection.coordinates + intersection.normal * 1e-4;  // Is a point that's VERY close to the surface. Fixes "grainy" effect
+            if (hasDirectLineOfSight(newOrigin, direction, lightSrc)){
+                color += (lightSrc->material.lightColor * std::max((float)0, intersection.normal.dot(direction)));
+                emmission = 1;
+            }
         }
     }
-    return intensity;
+    color *= emmission;
+    return color;
 }
 
 bool Renderer::hasDirectLineOfSight(const Vector3f& origin, const Vector3f& rayDirection, pShape3 shape) const{

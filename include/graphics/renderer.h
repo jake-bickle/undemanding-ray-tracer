@@ -35,8 +35,8 @@ public:
     bool findNearestVisibleObject(const Vector3f& origin, const Vector3f& primaryRayDirection,
                                         Intersection& intersection) const;
     bool hasDirectLineOfSight(const Vector3f& origin, const Vector3f& rayDirection, pShape3 shape) const;
-private:
-    float calculateLightIntensityAtPoint(const Vector3f& point) const;
 
+private:
+    Vector3f& applyLightColoring(const Intersection& intersection, Vector3f& color) const;
 };
 
