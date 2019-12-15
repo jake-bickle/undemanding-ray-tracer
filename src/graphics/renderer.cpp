@@ -79,8 +79,9 @@ float Renderer::calculateLightIntensityAtPoint(const Vector3f& point) const{
     float intensity = 0;
     for (auto& lightSrc : lightSources){
         Vector3f direction = lightSrc->origin - point;
+        direction.normalize();
         if (hasDirectLineOfSight(point, direction, lightSrc)){
-            intensity += lightSrc->material.lightIntensity;  // Can we add lightColor at all?
+            intensity += lightSrc->material.lightIntensity; 
         }
     }
     return intensity;
