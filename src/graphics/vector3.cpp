@@ -39,6 +39,14 @@ T Vector3<T>::magnitude() const{
 }
 
 template <typename T>
+Vector3<T>& Vector3<T>::floor(){
+    x = int(x);
+    y = int(y);
+    z = int(z);
+    return *this;
+}
+
+template <typename T>
 Vector3<T>& Vector3<T>::operator *= (const T& scalar){
     this->x *= scalar;
     this->y *= scalar;

@@ -15,6 +15,9 @@ struct Vector3{
     T dot(const Vector3<T>& vec) const;
     T magnitude_squared() const;
     T magnitude() const;
+
+    // Round all values down to nearest whole number
+    Vector3<T>& floor();
     Vector3<T> operator * (const T& scalar) const;
     Vector3<T> operator * (const Vector3<T>& rhs) const;
     Vector3<T>& operator *= (const T& scalar);
