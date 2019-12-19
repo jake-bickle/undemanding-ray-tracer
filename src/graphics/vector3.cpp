@@ -1,5 +1,6 @@
 #include <graphics/vector3.h>
 #include <cmath>
+#include <algorithm>
 
 template <typename T>
 Vector3<T>::Vector3()
@@ -43,6 +44,17 @@ Vector3<T>& Vector3<T>::floor(){
     x = int(x);
     y = int(y);
     z = int(z);
+    return *this;
+}
+
+template <typename T>
+Vector3<T>& Vector3<T>::range(float min, float max){
+    x = std::max(min, x);
+    x = std::min(max, x);
+    y = std::max(min, y);
+    y = std::min(max, y);
+    z = std::max(min, z);
+    z = std::min(max, z);
     return *this;
 }
 

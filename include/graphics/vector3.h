@@ -16,8 +16,10 @@ struct Vector3{
     T magnitude_squared() const;
     T magnitude() const;
 
+    /* Color friendly functions */
     // Round all values down to nearest whole number
     Vector3<T>& floor();
+    Vector3<T>& range(float min, float max);
     Vector3<T> operator * (const T& scalar) const;
     Vector3<T> operator * (const Vector3<T>& rhs) const;
     Vector3<T>& operator *= (const T& scalar);
