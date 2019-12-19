@@ -54,7 +54,7 @@ Vector3f Renderer::castRay(const Vector3f& origin, const Vector3f& primaryRayDir
         color = i.shape->material.color;
         applyLightColoring(i, color);
     }
-    return color.floor();
+    return color.range(0, 255).floor();
 }
 
 bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& primaryRayDirection,
@@ -74,19 +74,24 @@ bool Renderer::findNearestVisibleObject(const Vector3f& origin, const Vector3f& 
 }
 
 Vector3f& Renderer::applyLightColoring(const Intersection& intersection, Vector3f& color) const{
-    float emmission = 0;
+    bool isShadowed = true;
     if (!lightSources.empty()){
         for (auto& lightSrc : lightSources){
+            Vector3f origin = intersection.coordinates + intersection.normal * 1e-4;  // Is a point that's VERY close to the surface. Fixes "grainy" effect
             Vector3f direction = lightSrc->origin - intersection.coordinates;
             direction.normalize();
-            Vector3f newOrigin = intersection.coordinates + intersection.normal * 1e-4;  // Is a point that's VERY close to the surface. Fixes "grainy" effect
-            if (hasDirectLineOfSight(newOrigin, direction, lightSrc)){
-                color += (lightSrc->material.lightColor * std::max((float)0, intersection.normal.dot(direction)));
-                emmission = 1;
+            if (hasDirectLineOfSight(origin, direction, lightSrc)){
+                float dp = intersection.normal.dot(direction);
+                if (std::max((float)0, dp) != 0){
+                    color += (lightSrc->material.lightColor * dp);
+                    color *= lightSrc->material.lightIntensity;
+                    isShadowed = false;
+                }
             }
         }
     }
-    color *= emmission;
+    if (isShadowed)
+        color *= 0;
     return color;
 }
 
