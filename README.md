@@ -12,3 +12,4 @@ Right now, the ray tracer is quite limited. Some upcoming changes include
 - Object reflectance
 - Object transparency (with light refraction)
 - More 3D shapes (such as cubes and planes)
+- Exporting images to formats other than ppm
