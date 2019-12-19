@@ -18,11 +18,15 @@ int main(){
     Material lightSource;
     green.color = Vector3f(69, 252, 3);
     red.color = Vector3f(245, 90, 60);
-    lightSource.lightIntensity = 1;
+    lightSource.lightIntensity = .5;
+    lightSource.lightColor = Vector3f(255,255,225);
     Renderer r(800,600);
-    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(0,0,-10), 1, green)));
-    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(1,1,-5), 1, red)));
-    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(-1,-1,-5), 1, lightSource)));
+    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(-2,0,-10), 1, green)));
+    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(2,5,-10), 1.5, red)));
+    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(0,-5,-5), 1, lightSource)));
+    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(0,10,-15), 1, lightSource)));
+    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(-7,5,-5), 1, lightSource)));
+    r.addShapeToScene(std::shared_ptr<Shape3>(new Sphere(Vector3f(7,5,-5), 1, lightSource)));
 
     r.render(filename);
 
